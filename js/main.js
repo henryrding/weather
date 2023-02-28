@@ -1,6 +1,9 @@
 var $searchForm = document.querySelector('#search-form');
 var $placeList = document.querySelector('#place-list');
 var $noResults = document.querySelector('.no-results');
+var $addedOverlay = document.querySelector('#added-overlay');
+var $cancelButton = document.querySelector('#cancel-button');
+var $added = document.querySelector('#added');
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -45,9 +48,22 @@ function getResults(string) {
       var $button = document.createElement('button');
       $button.textContent = '+';
       $button.className = 'add-button';
-      $button.setAttribute('data-longlatt', xhr.response.data[i].longitude + ' ' + xhr.response.data[i].latitude);
+      $button.setAttribute('data-long', xhr.response.data[i].longitude);
+      $button.setAttribute('data-latt', xhr.response.data[i].latitude);
+      $button.setAttribute('data-name', xhr.response.data[i].label);
       $placeList.appendChild($button);
     }
   });
   xhr.send();
 }
+
+$placeList.addEventListener('click', function (event) {
+  if (event.target.tagName === 'BUTTON') {
+    $added.textContent = 'Added ' + event.target.getAttribute('data-name');
+    $addedOverlay.className = 'row';
+  }
+});
+
+$cancelButton.addEventListener('click', function () {
+  $addedOverlay.className = 'row hidden';
+});

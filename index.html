@@ -16,9 +16,9 @@
       <div class="row">
         <div class="column-full navbar">
           <h3>Weather</h3>
-          <a id="search-button" href="#">Search</a>
-          <a id="locations-button" href="#">Locations</a>
-          <a id="settings-button" href="#"><i class="fa-solid fa-gear"></i></a>
+          <a class="search-button" href="#">Search</a>
+          <a class="locations-button" href="#">Locations</a>
+          <a class="settings-button" href="#"><i class="fa-solid fa-gear"></i></a>
         </div>
       </div>
     </div>
@@ -42,6 +42,15 @@
       <ul id="place-list" class="center"></ul>
       <div class="no-results hidden">
         <p class="center dark-purple">no results</p>
+      </div>
+    </div>
+    <div id="added-overlay" class="row hidden">
+      <div class="column-full popup">
+        <p id="added"></p>
+        <section class="space-around">
+          <button id="cancel-button" type="button">Cancel</button>
+          <button class="locations-button" type="button">Locations</button>
+        </section>
       </div>
     </div>
   </main>
