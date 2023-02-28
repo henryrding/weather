@@ -27,6 +27,11 @@ function getResults(string) {
   xhr.open('GET', 'http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
+    var $child = $placeList.lastElementChild;
+    while ($child) {
+      $placeList.removeChild($child);
+      $child = $placeList.lastElementChild;
+    }
     for (var i = 0; i < xhr.response.data.length; i++) {
       var $li = document.createElement('li');
       $li.textContent = xhr.response.data[i].label;
