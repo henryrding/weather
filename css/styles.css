@@ -18,6 +18,10 @@ a {
   text-decoration: none;
 }
 
+form {
+  line-height: 2rem;
+}
+
 .navbar {
   display: flex;
   align-items: center;
@@ -26,4 +30,40 @@ a {
 .navbar > h3,
 .navbar > a {
   padding-right: 2rem;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#search {
+  background-color: #e5f8fa;
+  border: #1c0749 solid 0.1rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  width: 12rem;
+}
+
+.dark-purple {
+  color: #1c0749;
+}
+
+.margin-top {
+  margin-top: 0.5rem;
+}
+
+button {
+  background-color: #5252aa;
+  color: white;
+  border: #1c0749 solid 0.1rem;
+  border-radius: 0.2rem;
+  padding: 0.4rem;
 }
