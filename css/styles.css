@@ -32,16 +32,10 @@ form {
   padding-right: 2rem;
 }
 
-.flex-end {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
 .center {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 #search {
@@ -66,4 +60,11 @@ button {
   border: #1c0749 solid 0.1rem;
   border-radius: 0.2rem;
   padding: 0.4rem;
+  width: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .center {
+    align-items: center;
+  }
 }
