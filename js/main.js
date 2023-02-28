@@ -1,5 +1,6 @@
 var $searchForm = document.querySelector('#search-form');
 var $placeList = document.querySelector('#place-list');
+var $noResults = document.querySelector('.no-results');
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -31,6 +32,11 @@ function getResults(string) {
     while ($child) {
       $placeList.removeChild($child);
       $child = $placeList.lastElementChild;
+    }
+    if (xhr.response.data.length === 0) {
+      $noResults.className = 'no-results';
+    } else {
+      $noResults.className = 'no-results hidden';
     }
     for (var i = 0; i < xhr.response.data.length; i++) {
       var $li = document.createElement('li');
