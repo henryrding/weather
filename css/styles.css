@@ -18,6 +18,17 @@ a {
   text-decoration: none;
 }
 
+li {
+  color: #1c0749;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
 form {
   line-height: 2rem;
 }
@@ -61,6 +72,16 @@ button {
   border-radius: 0.2rem;
   padding: 0.4rem;
   width: auto;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.add-button {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
 }
 
 @media screen and (min-width: 768px) {

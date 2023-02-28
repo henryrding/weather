@@ -1,12 +1,11 @@
 var $searchForm = document.querySelector('#search-form');
+var $placeList = document.querySelector('#place-list');
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
   var input = $searchForm.elements.search.value;
-  var hasNumber = /\d/;
-  if (!hasNumber.text(input)) {
-    input = capitalizeCity(input);
-  }
+  input = capitalizeCity(input);
+  getResults(input);
 });
 
 function capitalizeCity(string) {
@@ -21,4 +20,23 @@ function capitalizeCity(string) {
     }
   } newTitle = array.join(' ');
   return newTitle;
+}
+
+function getResults(string) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    for (var i = 0; i < xhr.response.data.length; i++) {
+      var $li = document.createElement('li');
+      $li.textContent = xhr.response.data[i].label;
+      $placeList.appendChild($li);
+      var $button = document.createElement('button');
+      $button.textContent = '+';
+      $button.className = 'add-button';
+      $button.setAttribute('data-longlatt', xhr.response.data[i].longitude + ' ' + xhr.response.data[i].latitude);
+      $placeList.appendChild($button);
+    }
+  });
+  xhr.send();
 }
