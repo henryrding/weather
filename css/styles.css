@@ -12,7 +12,8 @@ h3 {
   font-weight: normal;
 }
 
-h4 {
+h4,
+#radio-inputs {
   margin: 1rem;
 }
 
@@ -23,9 +24,10 @@ a {
 }
 
 li,
-#added {
+#added,
+.settings > h4 {
   color: #1c0749;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
 }
 
@@ -52,7 +54,8 @@ form {
   margin-right: 2rem;
 }
 
-.location-entry {
+.location-entry,
+.settings {
   border: #1c0749 0.2rem solid;
   border-radius: 0.5rem;
   background-color: #e5f8fa;
@@ -93,12 +96,23 @@ img {
   width: 12rem;
 }
 
+#radio-inputs,
+input[type="radio"] {
+  color: #1c0749;
+}
+
 .dark-purple {
   color: #1c0749;
 }
 
 .margin-top {
   margin-top: 0.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
 }
 
 #added-overlay {
