@@ -85,6 +85,9 @@ document.addEventListener('DOMContentLoaded', function (event) {
     var $placeTree = renderPlace(data.places[i]);
     $locations.appendChild($placeTree);
   }
+  if ($locations.children.length > 0) {
+    toggleNoPlaces();
+  }
 });
 
 function getResults(string) {
@@ -138,6 +141,9 @@ $placeList.addEventListener('click', function (event) {
     if (same === 0) {
       data.places.push(placeData);
       $locations.appendChild(renderPlace(placeData));
+      if ($noPlaces.className === 'no-places') {
+        toggleNoPlaces();
+      }
     }
   }
 });
@@ -186,8 +192,6 @@ function toggleNoPlaces() {
     $noPlaces.className = 'no-places';
   }
 }
-
-toggleNoPlaces();
 
 $navbar.addEventListener('click', function (event) {
   if (event.target.id === 'search-button') {
