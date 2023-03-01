@@ -28,6 +28,52 @@ function capitalizeCity(string) {
   return newTitle;
 }
 
+function renderPlace(place) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=british&output=internal&tzshift=0');
+  xhr.responseType = 'arraybuffer';
+  xhr.addEventListener('load', function () {
+    var arrayBufferView = new Uint8Array(this.response);
+    var blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(blob);
+    var $li = document.createElement('li');
+    $li.className = 'location-entry';
+    var $div = document.createElement('div');
+    $div.className = 'row column';
+    $li.appendChild($div);
+    var $div1 = document.createElement('div');
+    $div1.className = 'row';
+    $div.appendChild($div1);
+    var $div2 = document.createElement('div');
+    $div2.className = 'column-full inline';
+    $div1.appendChild($div2);
+    var $h4 = document.createElement('h4');
+    $h4.className = 'margin-right';
+    $h4.textContent = place.name;
+    $div2.appendChild($h4);
+    var $button = document.createElement('button');
+    $button.className = 'more-info-button';
+    $button.setAttribute('data-long', place.longitude);
+    $button.setAttribute('data-latt', place.latitude);
+    $button.textContent = 'More Info';
+    $div2.appendChild($button);
+    var $div3 = document.createElement('div');
+    $div3.className = 'row';
+    $div.appendChild($div3);
+    var $div4 = document.createElement('div');
+    $div4.className = 'column-full';
+    $div3.appendChild($div4);
+    var $img = document.createElement('img');
+    $img.src = imageUrl;
+    $div4.appendChild($img);
+    $locations.appendChild($li);
+  });
+  xhr.send();
+}
+
+renderPlace(data.places[0]);
+
 function getResults(string) {
   var targetUrl = encodeURIComponent('http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
 
