@@ -12,6 +12,7 @@ var $searchPage = document.querySelector('#search-page');
 var $locationsPage = document.querySelector('#locations-page');
 var $settingsPage = document.querySelector('#settings-page');
 var $moreInfoPage = document.querySelector('#more-info-page');
+var $navbar = document.querySelector('.navbar');
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -186,3 +187,13 @@ function toggleNoPlaces() {
 }
 
 toggleNoPlaces();
+
+$navbar.addEventListener('click', function (event) {
+  if (event.target.id === 'search-button') {
+    swapView('search');
+  } else if (event.target.id === 'locations-button') {
+    swapView('locations');
+  } else if (event.target.id === 'settings-button') {
+    swapView('settings');
+  }
+});
