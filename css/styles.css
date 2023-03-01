@@ -146,3 +146,9 @@ button:hover {
     align-items: center;
   }
 }
+
+@media screen and (min-width: 506px) {
+  .location-entry {
+    max-width: 506px;
+  }
+}
