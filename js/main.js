@@ -230,3 +230,8 @@ function changeToUnit(unit) {
 }
 
 changeToUnit('imperial');
+
+window.onload = onPageLoad();
+function onPageLoad() {
+  document.getElementById(data.unit).checked = true;
+}
