@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   for (var i = 0; i < data.places.length; i++) {
     var $placeTree = renderPlace(data.places[i]);
     $locations.appendChild($placeTree);
-  }
+  } swapView(data.view);
   if ($locations.children.length > 0) {
     toggleNoPlaces();
   }
@@ -183,6 +183,7 @@ function swapView(view) {
   //   $settingsPage.className = 'hidden';
   //   $moreInfoPage.className = '';
   }
+  data.view = view;
 }
 
 function toggleNoPlaces() {
