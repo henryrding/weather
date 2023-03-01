@@ -137,6 +137,7 @@ $placeList.addEventListener('click', function (event) {
     }
     if (same === 0) {
       data.places.push(placeData);
+      $locations.appendChild(renderPlace(placeData));
     }
   }
 });
