@@ -68,7 +68,15 @@ $placeList.addEventListener('click', function (event) {
       longitude: event.target.getAttribute('data-long'),
       latitude: event.target.getAttribute('data-latt')
     };
-    data.places.push(placeData);
+    var same = 0;
+    for (var i = 0; i < data.places.length; i++) {
+      if (JSON.stringify(placeData) === JSON.stringify(data.places[i])) {
+        same++;
+      }
+    }
+    if (same === 0) {
+      data.places.push(placeData);
+    }
   }
 });
 
