@@ -2,7 +2,8 @@
 var data = {
   places: [],
   currentPlace: null,
-  view: 'search'
+  view: 'search',
+  unit: 'metric'
 };
 
 window.addEventListener('beforeunload', function (event) {
