@@ -29,8 +29,10 @@ function capitalizeCity(string) {
 }
 
 function getResults(string) {
+  var targetUrl = encodeURIComponent('http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
+
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
+  xhr.open('GET', 'https://lfz-cors.herokuapp.com/?url=' + targetUrl);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var $child = $placeList.lastElementChild;
