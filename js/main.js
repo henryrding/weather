@@ -7,6 +7,8 @@ var $added = document.querySelector('#added');
 var $toLocationsButton = document.querySelector('.to-locations-button');
 var $viewHeading = document.querySelector('.view-heading');
 var $locations = document.querySelector('#locations-list');
+var $noPlaces = document.querySelector('.no-places');
+
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
   var input = $searchForm.elements.search.value;
@@ -151,3 +153,13 @@ function swapView(view) {
     $locations.className = 'center';
   }
 }
+
+function toggleNoPlaces() {
+  if ($noPlaces.className === 'no-places') {
+    $noPlaces.className = 'no-places hidden';
+  } else {
+    $noPlaces.className = 'no-places';
+  }
+}
+
+toggleNoPlaces();
