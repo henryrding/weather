@@ -12,13 +12,18 @@ h3 {
   font-weight: normal;
 }
 
+h4 {
+  margin: 1rem;
+}
+
 i,
 a {
   color: white;
   text-decoration: none;
 }
 
-li {
+li,
+#added {
   color: #1c0749;
   font-size: 2rem;
   font-weight: bold;
@@ -43,10 +48,36 @@ form {
   padding-right: 2rem;
 }
 
+.location-entry {
+  border: #1c0749 0.2rem solid;
+  border-radius: 0.5rem;
+  background-color: #e5f8fa;
+}
+
+img {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.inline {
+  display: flex;
+  align-items: center;
+}
+
+.column {
+  flex-direction: column;
+}
+
 .center {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.space-around {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 #search {
@@ -63,6 +94,22 @@ form {
 
 .margin-top {
   margin-top: 0.5rem;
+}
+
+#added-overlay {
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 75%);
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup {
+  background-color: white;
+  width: fit-content;
+  border-radius: 0.25rem;
+  padding: 1rem;
 }
 
 button {
