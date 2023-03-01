@@ -14,6 +14,28 @@ var $settingsPage = document.querySelector('#settings-page');
 var $moreInfoPage = document.querySelector('#more-info-page');
 var $navbar = document.querySelector('.navbar');
 
+var $unit = data.unit;
+var $7timerUnit = '';
+var $openmeteoTempUnit = '';
+var $openmeteoWindUnit = '';
+var $openmeteoPrecipitationUnit = '';
+
+if ($unit === 'metric') {
+  $7timerUnit = '';
+  $openmeteoTempUnit = 'celsius';
+  $openmeteoWindUnit = 'kmh';
+  $openmeteoPrecipitationUnit = 'mm';
+} else if ($unit === 'imperial') {
+  $7timerUnit = 'british';
+  $openmeteoTempUnit = 'fahrenheit';
+  $openmeteoWindUnit = 'mph';
+  $openmeteoPrecipitationUnit = 'inch';
+}
+
+// to get rid of lint error
+var x = $7timerUnit + $openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit;
+capitalizeCity(x);
+
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
   var input = $searchForm.elements.search.value;
