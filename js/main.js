@@ -176,12 +176,12 @@ function swapView(view) {
     $locationsPage.className = 'hidden';
     $settingsPage.className = '';
     $moreInfoPage.className = 'hidden';
-  // } else if (view === 'more-info') {
-  //   $viewHeading.textContent = currentPlace.name;
-  //   $searchPage.className = 'hidden';
-  //   $locationsPage.className = 'hidden';
-  //   $settingsPage.className = 'hidden';
-  //   $moreInfoPage.className = '';
+  } else if (view === 'more-info') {
+    $viewHeading.textContent = data.currentPlace.name;
+    $searchPage.className = 'hidden';
+    $locationsPage.className = 'hidden';
+    $settingsPage.className = 'hidden';
+    $moreInfoPage.className = '';
   }
   data.view = view;
 }
