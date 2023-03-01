@@ -33,8 +33,7 @@ if ($unit === 'metric') {
 }
 
 // to get rid of lint error
-var x = $7timerUnit + $openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit;
-capitalizeCity(x);
+capitalizeCity($openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit);
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -88,7 +87,7 @@ function renderPlace(place) {
   var $img = document.createElement('img');
 
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=british&output=internal&tzshift=0');
+  xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
   xhr.responseType = 'arraybuffer';
   xhr.addEventListener('load', function () {
     var arrayBufferView = new Uint8Array(this.response);
@@ -225,3 +224,9 @@ $navbar.addEventListener('click', function (event) {
     swapView('settings');
   }
 });
+
+function changeToUnit(unit) {
+  data.unit = unit;
+}
+
+changeToUnit('imperial');
