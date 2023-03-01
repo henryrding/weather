@@ -30,23 +30,29 @@
           <h1 class="view-heading dark-purple">Search</h1>
         </div>
       </div>
-      <form id="search-form" class="row">
-        <div class="column-full center">
-          <label class="dark-purple" for="search"><strong>Search</strong></label>
-          <input type="search" required id="search" name="search" placeholder="Address, City, or ZIP Code">
+      <div id="search-page">
+        <form id="search-form" class="row">
+          <div class="column-full center">
+            <label class="dark-purple" for="search"><strong>Search</strong></label>
+            <input type="search" required id="search" name="search" placeholder="Address, City, or ZIP Code">
+          </div>
+          <div class="column-full margin-top center">
+            <button id="search-submit-button" type="submit">Search</button>
+          </div>
+        </form>
+        <ul id="place-list" class="center"></ul>
+        <div class="no-results hidden">
+          <p class="center dark-purple">No Results</p>
         </div>
-        <div class="column-full margin-top center">
-          <button id="search-submit-button" type="submit">Search</button>
+      </div>
+      <div id="locations-page" class="hidden">
+        <ul id="locations-list" class="center"></ul>
+        <div class="no-places">
+          <p class="center dark-purple">No Places Added Yet!</p>
         </div>
-      </form>
-      <ul id="place-list" class="center"></ul>
-      <ul id="locations-list" class="center"></ul>
-      <div class="no-places">
-        <p class="center dark-purple">No Places Added Yet!</p>
       </div>
-      <div class="no-results hidden">
-        <p class="center dark-purple">No Results</p>
-      </div>
+      <div id="settings-page" class="hidden"></div>
+      <div id="more-info-page" class="hidden"></div>
     </div>
     <div id="added-overlay" class="row hidden">
       <div class="column-full popup">

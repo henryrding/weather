@@ -8,6 +8,10 @@ var $toLocationsButton = document.querySelector('.to-locations-button');
 var $viewHeading = document.querySelector('.view-heading');
 var $locations = document.querySelector('#locations-list');
 var $noPlaces = document.querySelector('.no-places');
+var $searchPage = document.querySelector('#search-page');
+var $locationsPage = document.querySelector('#locations-page');
+var $settingsPage = document.querySelector('#settings-page');
+var $moreInfoPage = document.querySelector('#more-info-page');
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -146,11 +150,30 @@ $toLocationsButton.addEventListener('click', function () {
 });
 
 function swapView(view) {
-  if (view === 'locations') {
+  if (view === 'search') {
+    $viewHeading.textContent = 'Search';
+    $searchPage.className = '';
+    $locationsPage.className = 'hidden';
+    $settingsPage.className = 'hidden';
+    $moreInfoPage.className = 'hidden';
+  } else if (view === 'locations') {
     $viewHeading.textContent = 'Locations';
-    $searchForm.className = 'row hidden';
-    $placeList.className = 'center hidden';
-    $locations.className = 'center';
+    $searchPage.className = 'hidden';
+    $locationsPage.className = '';
+    $settingsPage.className = 'hidden';
+    $moreInfoPage.className = 'hidden';
+  } else if (view === 'settings') {
+    $viewHeading.textContent = 'Settings';
+    $searchPage.className = 'hidden';
+    $locationsPage.className = 'hidden';
+    $settingsPage.className = '';
+    $moreInfoPage.className = 'hidden';
+  // } else if (view === 'more-info') {
+  //   $viewHeading.textContent = currentPlace.name;
+  //   $searchPage.className = 'hidden';
+  //   $locationsPage.className = 'hidden';
+  //   $settingsPage.className = 'hidden';
+  //   $moreInfoPage.className = '';
   }
 }
 

@@ -1,6 +1,7 @@
 /* exported data */
 var data = {
-  places: []
+  places: [],
+  currentPlace: null
 };
 
 window.addEventListener('beforeunload', function (event) {
