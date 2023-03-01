@@ -72,7 +72,11 @@ function renderPlace(place) {
   xhr.send();
 }
 
-renderPlace(data.places[0]);
+document.addEventListener('DOMContentLoaded', function (event) {
+  for (var i = 0; i < data.places.length; i++) {
+    renderPlace(data.places[i]);
+  }
+});
 
 function getResults(string) {
   var targetUrl = encodeURIComponent('http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
