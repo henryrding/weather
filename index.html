@@ -16,9 +16,9 @@
       <div class="row">
         <div class="column-full navbar">
           <h3>Weather</h3>
-          <a class="search-button" href="#">Search</a>
-          <a class="locations-button" href="#">Locations</a>
-          <a class="settings-button" href="#"><i class="fa-solid fa-gear"></i></a>
+          <a id="search-button" href="#">Search</a>
+          <a id="locations-button" href="#">Locations</a>
+          <a id="settings-button" href="#"><i class="fa-solid fa-gear"></i></a>
         </div>
       </div>
     </div>
@@ -40,6 +40,25 @@
         </div>
       </form>
       <ul id="place-list" class="center"></ul>
+      <ul id="locations-list" class="center hidden">
+        <li class="location-entry">
+          <div class="row column">
+            <div class="row">
+              <div class="column-full inline">
+                <h4 class="margin-right">Irvine, CA, USA</h4>
+                <button class="more-info-button" data-long="-117.764394" data-latt="33.672421">More Info</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="column-full">
+                <img
+                  src="https://www.7timer.info/bin/civillight.php?lon=-117.8&lat=33.7&ac=0&lang=en&unit=british&output=internal&tzshift=0"
+                  alt="week-weather">
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
       <div class="no-results hidden">
         <p class="center dark-purple">no results</p>
       </div>
@@ -49,7 +68,7 @@
         <p id="added"></p>
         <section class="space-around">
           <button id="cancel-button" type="button">Cancel</button>
-          <button class="locations-button" type="button">Locations</button>
+          <button class="to-locations-button" type="button">Locations</button>
         </section>
       </div>
     </div>

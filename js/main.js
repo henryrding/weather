@@ -4,7 +4,9 @@ var $noResults = document.querySelector('.no-results');
 var $addedOverlay = document.querySelector('#added-overlay');
 var $cancelButton = document.querySelector('#cancel-button');
 var $added = document.querySelector('#added');
-
+var $toLocationsButton = document.querySelector('.to-locations-button');
+var $viewHeading = document.querySelector('.view-heading');
+var $locations = document.querySelector('#locations-list');
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
   var input = $searchForm.elements.search.value;
@@ -58,7 +60,7 @@ function getResults(string) {
 }
 
 $placeList.addEventListener('click', function (event) {
-  if (event.target.tagName === 'BUTTON') {
+  if (event.target.className === 'add-button') {
     $added.textContent = 'Added ' + event.target.getAttribute('data-name');
     $addedOverlay.className = 'row';
   }
@@ -67,3 +69,18 @@ $placeList.addEventListener('click', function (event) {
 $cancelButton.addEventListener('click', function () {
   $addedOverlay.className = 'row hidden';
 });
+
+$toLocationsButton.addEventListener('click', function () {
+  $addedOverlay.className = 'row hidden';
+  swapView('locations');
+});
+
+function swapView(view) {
+  if (view === 'locations') {
+    $viewHeading.textContent = 'Locations';
+    $searchForm.className = 'row hidden';
+    $placeList.className = 'center hidden';
+    $locations.className = 'center';
+  }
+
+}
