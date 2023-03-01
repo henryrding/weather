@@ -63,6 +63,12 @@ $placeList.addEventListener('click', function (event) {
   if (event.target.className === 'add-button') {
     $added.textContent = 'Added ' + event.target.getAttribute('data-name');
     $addedOverlay.className = 'row';
+    var placeData = {
+      name: event.target.getAttribute('data-name'),
+      longitude: event.target.getAttribute('data-long'),
+      latitude: event.target.getAttribute('data-latt')
+    };
+    data.places.push(placeData);
   }
 });
 
@@ -82,5 +88,4 @@ function swapView(view) {
     $placeList.className = 'center hidden';
     $locations.className = 'center';
   }
-
 }
