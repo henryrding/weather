@@ -89,6 +89,7 @@ function renderPlace(place) {
   $div4.className = 'column-full';
   $div3.appendChild($div4);
   var $img = document.createElement('img');
+  $img.alt = 'One Week Forecast Graphic for ' + place.name;
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
