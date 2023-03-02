@@ -121,7 +121,8 @@ input[type="radio"] {
   margin-top: 1rem;
 }
 
-#added-overlay {
+#added-overlay,
+#delete-overlay {
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 75%);
   position: fixed;
