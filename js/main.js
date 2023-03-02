@@ -77,6 +77,7 @@ function renderPlace(place) {
   $button.className = 'more-info-button';
   $button.setAttribute('data-long', place.longitude);
   $button.setAttribute('data-latt', place.latitude);
+  $button.setAttribute('data-name', place.name);
   $button.textContent = 'More Info';
   $div2.appendChild($button);
   var $div3 = document.createElement('div');
@@ -236,3 +237,9 @@ window.onload = onPageLoad();
 function onPageLoad() {
   document.getElementById(data.unit).checked = true;
 }
+
+$locations.addEventListener('click', function (event) {
+  if (event.target.className === 'more-info-button') {
+    $viewHeading.textContent = event.target.getAttribute('data-name');
+  }
+});
