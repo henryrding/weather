@@ -13,6 +13,28 @@ var $locationsPage = document.querySelector('#locations-page');
 var $settingsPage = document.querySelector('#settings-page');
 var $moreInfoPage = document.querySelector('#more-info-page');
 var $navbar = document.querySelector('.navbar');
+var $settingsForm = document.querySelector('#settings-form');
+
+var $unit = data.unit;
+var $7timerUnit = '';
+var $openmeteoTempUnit = '';
+var $openmeteoWindUnit = '';
+var $openmeteoPrecipitationUnit = '';
+
+if ($unit === 'metric') {
+  $7timerUnit = '';
+  $openmeteoTempUnit = 'celsius';
+  $openmeteoWindUnit = 'kmh';
+  $openmeteoPrecipitationUnit = 'mm';
+} else if ($unit === 'imperial') {
+  $7timerUnit = 'british';
+  $openmeteoTempUnit = 'fahrenheit';
+  $openmeteoWindUnit = 'mph';
+  $openmeteoPrecipitationUnit = 'inch';
+}
+
+// to get rid of lint error
+capitalizeCity($openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit);
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -66,7 +88,7 @@ function renderPlace(place) {
   var $img = document.createElement('img');
 
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=british&output=internal&tzshift=0');
+  xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
   xhr.responseType = 'arraybuffer';
   xhr.addEventListener('load', function () {
     var arrayBufferView = new Uint8Array(this.response);
@@ -203,3 +225,14 @@ $navbar.addEventListener('click', function (event) {
     swapView('settings');
   }
 });
+
+$settingsForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  data.unit = $settingsForm.elements.unit.value;
+  location.reload();
+});
+
+window.onload = onPageLoad();
+function onPageLoad() {
+  document.getElementById(data.unit).checked = true;
+}

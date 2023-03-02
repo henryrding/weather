@@ -51,7 +51,23 @@
           <p class="center dark-purple">No Places Added Yet!</p>
         </div>
       </div>
-      <div id="settings-page" class="hidden"></div>
+      <div id="settings-page" class="hidden">
+        <form id="settings-form">
+          <div class="settings">
+            <h4>Unit</h4>
+            <div id="radio-inputs">
+              <input type="radio" name="unit" id="metric" value="metric">
+              <label for="metric" class="settings-sub-header">Celsius</label>
+
+              <input type="radio" name="unit" id="imperial" value="imperial">
+              <label for="imperial" class="settings-sub-header">Fahrenheit</label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Apply</button>
+          </div>
+        </form>
+      </div>
       <div id="more-info-page" class="hidden"></div>
     </div>
     <div id="added-overlay" class="row hidden">
