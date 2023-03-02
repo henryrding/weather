@@ -15,6 +15,8 @@ var $moreInfoPage = document.querySelector('#more-info-page');
 var $navbar = document.querySelector('.navbar');
 var $settingsForm = document.querySelector('#settings-form');
 var $deleteButton = document.querySelector('#delete-button');
+var $deleteConfirmation = document.querySelector('#delete-confirmation');
+var $deleteOverlay = document.querySelector('#delete-overlay');
 
 var $unit = data.unit;
 var $7timerUnit = '';
@@ -34,7 +36,7 @@ if ($unit === 'metric') {
   $openmeteoPrecipitationUnit = 'inch';
 }
 
-// to get rid of lint error
+// to get rid of lint error, placeholder variables
 capitalizeCity($openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit);
 
 $searchForm.addEventListener('submit', function () {
@@ -256,5 +258,36 @@ $locations.addEventListener('click', function (event) {
 });
 
 $deleteButton.addEventListener('click', function () {
+  $deleteConfirmation.textContent = 'Are you sure you want to delete ' + data.currentPlace.name + '?';
+  $deleteOverlay.className = 'row';
+});
 
+$deleteOverlay.addEventListener('click', function (event) {
+  if (event.target.id === 'no-button') {
+    $deleteOverlay.className = 'row hidden';
+  } else if (event.target.id === 'yes-button') {
+    var placeData = data.currentPlace;
+    for (var i = 0; i < data.places.length; i++) {
+      if (JSON.stringify(placeData) === JSON.stringify(data.places[i])) {
+        data.places.splice(i, 1);
+      }
+    }
+    var $moreInfoNodeList = document.querySelectorAll('.more-info-button');
+    var $locationEntryNodeList = document.querySelectorAll('.location-entry');
+    for (var j = 0; j < $locationEntryNodeList.length; j++) {
+      var locationEntryData = {
+        name: $moreInfoNodeList[j].getAttribute('data-name'),
+        longitude: $moreInfoNodeList[j].getAttribute('data-long'),
+        latitude: $moreInfoNodeList[j].getAttribute('data-latt')
+      };
+      if (JSON.stringify(placeData) === JSON.stringify(locationEntryData)) {
+        $locationEntryNodeList[j].remove();
+      }
+      if ($locations.children.length === 0) {
+        toggleNoPlaces();
+      }
+    } $deleteOverlay.className = 'row hidden';
+    data.currentPlace = null;
+    swapView('locations');
+  }
 });
