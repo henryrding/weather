@@ -63,7 +63,7 @@ form {
 
 img {
   width: 100%;
-  margin-bottom: 1rem;
+  padding: 0 1rem 1rem;
 }
 
 .inline {
@@ -82,9 +82,9 @@ img {
   align-items: flex-start;
 }
 
-.space-around {
+.space-evenly {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -152,6 +152,10 @@ button {
   color: red;
 }
 
+#yes-button {
+  background-color: red;
+}
+
 button:hover,
 i:hover,
 input[type="radio"]:hover {
@@ -174,8 +178,8 @@ input[type="radio"]:hover {
   }
 }
 
-@media screen and (min-width: 506px) {
+@media screen and (min-width: 532px) {
   .location-entry {
-    max-width: 506px;
+    max-width: 532px;
   }
 }

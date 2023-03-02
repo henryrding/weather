@@ -73,7 +73,6 @@ function renderPlace(place) {
   $div2.className = 'column-full inline';
   $div1.appendChild($div2);
   var $h4 = document.createElement('h4');
-  $h4.className = 'margin-right';
   $h4.textContent = place.name;
   $div2.appendChild($h4);
   var $button = document.createElement('button');
