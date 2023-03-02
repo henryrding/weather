@@ -17,6 +17,7 @@ var $settingsForm = document.querySelector('#settings-form');
 var $deleteButton = document.querySelector('#delete-button');
 var $deleteConfirmation = document.querySelector('#delete-confirmation');
 var $deleteOverlay = document.querySelector('#delete-overlay');
+var $buttonRow = document.querySelector('#button-row');
 
 var $unit = data.unit;
 var $7timerUnit = '';
@@ -123,6 +124,23 @@ function renderCurrentPlace() {
   return $img;
 }
 
+function renderWeek() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + data.currentPlace.latitude + '&longitude=' + data.currentPlace.longitude + '&hourly=temperature_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,cloudcover,windspeed_10m&temperature_unit=' + $openmeteoTempUnit + '&windspeed_unit=' + $openmeteoWindUnit + '&precipitation_unit=' + $openmeteoPrecipitationUnit + '&timezone=auto');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    var time = new Date(xhr.response.hourly.time[0]);
+    var currentDayIndex = time.getDay();
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    var dayIndex = currentDayIndex;
+    for (var i = 1; i < 7; i++) {
+      dayIndex++;
+      $buttonRow.children[i].textContent = days[dayIndex];
+    }
+  });
+  xhr.send();
+}
+
 document.addEventListener('DOMContentLoaded', function (event) {
   for (var i = 0; i < data.places.length; i++) {
     var $placeTree = renderPlace(data.places[i]);
@@ -133,6 +151,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   }
   var $currentPlace = renderCurrentPlace();
   $moreInfoPage.prepend($currentPlace);
+  renderWeek();
 });
 
 function getResults(string) {
@@ -272,11 +291,12 @@ $locations.addEventListener('click', function (event) {
         data.currentPlace = data.places[i];
       }
     }
-    while ($moreInfoPage.childElementCount > 0) {
+    if ($moreInfoPage.childElementCount > 1) {
       $moreInfoPage.removeChild($moreInfoPage.childNodes[0]);
     }
     var $currentPlace = renderCurrentPlace();
     $moreInfoPage.prepend($currentPlace);
+    renderWeek();
     swapView('more-info');
   }
 });
