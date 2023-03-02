@@ -88,6 +88,12 @@ img {
   align-items: center;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #search {
   background-color: #e5f8fa;
   border: #1c0749 solid 0.1rem;
@@ -139,6 +145,10 @@ button {
   padding: 0.4rem;
   width: auto;
   white-space: nowrap;
+}
+
+#delete-button {
+  color: red;
 }
 
 button:hover,

@@ -14,6 +14,7 @@ var $settingsPage = document.querySelector('#settings-page');
 var $moreInfoPage = document.querySelector('#more-info-page');
 var $navbar = document.querySelector('.navbar');
 var $settingsForm = document.querySelector('#settings-form');
+var $deleteButton = document.querySelector('#delete-button');
 
 var $unit = data.unit;
 var $7timerUnit = '';
@@ -187,24 +188,28 @@ function swapView(view) {
     $locationsPage.className = 'hidden';
     $settingsPage.className = 'hidden';
     $moreInfoPage.className = 'hidden';
+    $deleteButton.className = 'hidden';
   } else if (view === 'locations') {
     $viewHeading.textContent = 'Locations';
     $searchPage.className = 'hidden';
     $locationsPage.className = '';
     $settingsPage.className = 'hidden';
     $moreInfoPage.className = 'hidden';
+    $deleteButton.className = 'hidden';
   } else if (view === 'settings') {
     $viewHeading.textContent = 'Settings';
     $searchPage.className = 'hidden';
     $locationsPage.className = 'hidden';
     $settingsPage.className = '';
     $moreInfoPage.className = 'hidden';
+    $deleteButton.className = 'hidden';
   } else if (view === 'more-info') {
     $viewHeading.textContent = data.currentPlace.name;
     $searchPage.className = 'hidden';
     $locationsPage.className = 'hidden';
     $settingsPage.className = 'hidden';
     $moreInfoPage.className = '';
+    $deleteButton.className = '';
   }
   data.view = view;
 }
