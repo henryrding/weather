@@ -240,6 +240,11 @@ function onPageLoad() {
 
 $locations.addEventListener('click', function (event) {
   if (event.target.className === 'more-info-button') {
-    $viewHeading.textContent = event.target.getAttribute('data-name');
+    for (var i = 0; i < data.places.length; i++) {
+      if (data.places[i].name === event.target.getAttribute('data-name') && data.places[i].longitude === event.target.getAttribute('data-long') && data.places[i].latitude === event.target.getAttribute('data-latt')) {
+        data.currentPlace = data.places[i];
+      }
+    }
+    swapView('more-info');
   }
 });
