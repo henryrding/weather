@@ -89,7 +89,7 @@ function renderPlace(place) {
   $div4.className = 'column-full';
   $div3.appendChild($div4);
   var $img = document.createElement('img');
-  $img.alt = 'One Week Forecast Graphic for ' + place.name;
+  $img.alt = 'One Week Daily Forecast Graphic for ' + place.name;
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
@@ -106,6 +106,23 @@ function renderPlace(place) {
   return $li;
 }
 
+function renderCurrentPlace() {
+  var $img = document.createElement('img');
+  $img.alt = 'One Week Tri-Hourly Forecast Graphic for ' + data.currentPlace.name;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://www.7timer.info/bin/civil.php?lon=' + data.currentPlace.longitude + '&lat=' + data.currentPlace.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
+  xhr.responseType = 'arraybuffer';
+  xhr.addEventListener('load', function () {
+    var arrayBufferView = new Uint8Array(this.response);
+    var blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(blob);
+    $img.src = imageUrl;
+  });
+  xhr.send();
+  return $img;
+}
+
 document.addEventListener('DOMContentLoaded', function (event) {
   for (var i = 0; i < data.places.length; i++) {
     var $placeTree = renderPlace(data.places[i]);
@@ -114,6 +131,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
   if ($locations.children.length > 0) {
     toggleNoPlaces();
   }
+  var $currentPlace = renderCurrentPlace();
+  $moreInfoPage.prepend($currentPlace);
 });
 
 function getResults(string) {
@@ -253,6 +272,11 @@ $locations.addEventListener('click', function (event) {
         data.currentPlace = data.places[i];
       }
     }
+    while ($moreInfoPage.childElementCount > 0) {
+      $moreInfoPage.removeChild($moreInfoPage.childNodes[0]);
+    }
+    var $currentPlace = renderCurrentPlace();
+    $moreInfoPage.prepend($currentPlace);
     swapView('more-info');
   }
 });
