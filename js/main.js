@@ -13,6 +13,7 @@ var $locationsPage = document.querySelector('#locations-page');
 var $settingsPage = document.querySelector('#settings-page');
 var $moreInfoPage = document.querySelector('#more-info-page');
 var $navbar = document.querySelector('.navbar');
+var $settingsForm = document.querySelector('#settings-form');
 
 var $unit = data.unit;
 var $7timerUnit = '';
@@ -225,11 +226,11 @@ $navbar.addEventListener('click', function (event) {
   }
 });
 
-function changeToUnit(unit) {
-  data.unit = unit;
-}
-
-changeToUnit('imperial');
+$settingsForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  data.unit = $settingsForm.elements.unit.value;
+  location.reload();
+});
 
 window.onload = onPageLoad();
 function onPageLoad() {
