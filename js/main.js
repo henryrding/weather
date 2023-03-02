@@ -14,6 +14,9 @@ var $settingsPage = document.querySelector('#settings-page');
 var $moreInfoPage = document.querySelector('#more-info-page');
 var $navbar = document.querySelector('.navbar');
 var $settingsForm = document.querySelector('#settings-form');
+var $deleteButton = document.querySelector('#delete-button');
+var $deleteConfirmation = document.querySelector('#delete-confirmation');
+var $deleteOverlay = document.querySelector('#delete-overlay');
 
 var $unit = data.unit;
 var $7timerUnit = '';
@@ -33,7 +36,7 @@ if ($unit === 'metric') {
   $openmeteoPrecipitationUnit = 'inch';
 }
 
-// to get rid of lint error
+// to get rid of lint error, placeholder variables
 capitalizeCity($openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit);
 
 $searchForm.addEventListener('submit', function () {
@@ -70,13 +73,13 @@ function renderPlace(place) {
   $div2.className = 'column-full inline';
   $div1.appendChild($div2);
   var $h4 = document.createElement('h4');
-  $h4.className = 'margin-right';
   $h4.textContent = place.name;
   $div2.appendChild($h4);
   var $button = document.createElement('button');
   $button.className = 'more-info-button';
   $button.setAttribute('data-long', place.longitude);
   $button.setAttribute('data-latt', place.latitude);
+  $button.setAttribute('data-name', place.name);
   $button.textContent = 'More Info';
   $div2.appendChild($button);
   var $div3 = document.createElement('div');
@@ -86,6 +89,7 @@ function renderPlace(place) {
   $div4.className = 'column-full';
   $div3.appendChild($div4);
   var $img = document.createElement('img');
+  $img.alt = 'One Week Forecast Graphic for ' + place.name;
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
@@ -206,6 +210,11 @@ function swapView(view) {
     $moreInfoPage.className = '';
   }
   data.view = view;
+  if (data.view === 'more-info') {
+    $deleteButton.className = '';
+  } else {
+    $deleteButton.className = 'hidden';
+  }
 }
 
 function toggleNoPlaces() {
@@ -236,3 +245,49 @@ window.onload = onPageLoad();
 function onPageLoad() {
   document.getElementById(data.unit).checked = true;
 }
+
+$locations.addEventListener('click', function (event) {
+  if (event.target.className === 'more-info-button') {
+    for (var i = 0; i < data.places.length; i++) {
+      if (data.places[i].name === event.target.getAttribute('data-name') && data.places[i].longitude === event.target.getAttribute('data-long') && data.places[i].latitude === event.target.getAttribute('data-latt')) {
+        data.currentPlace = data.places[i];
+      }
+    }
+    swapView('more-info');
+  }
+});
+
+$deleteButton.addEventListener('click', function () {
+  $deleteConfirmation.textContent = 'Are you sure you want to delete ' + data.currentPlace.name + '?';
+  $deleteOverlay.className = 'row';
+});
+
+$deleteOverlay.addEventListener('click', function (event) {
+  if (event.target.id === 'no-button') {
+    $deleteOverlay.className = 'row hidden';
+  } else if (event.target.id === 'yes-button') {
+    var placeData = data.currentPlace;
+    for (var i = 0; i < data.places.length; i++) {
+      if (JSON.stringify(placeData) === JSON.stringify(data.places[i])) {
+        data.places.splice(i, 1);
+      }
+    }
+    var $moreInfoNodeList = document.querySelectorAll('.more-info-button');
+    var $locationEntryNodeList = document.querySelectorAll('.location-entry');
+    for (var j = 0; j < $locationEntryNodeList.length; j++) {
+      var locationEntryData = {
+        name: $moreInfoNodeList[j].getAttribute('data-name'),
+        longitude: $moreInfoNodeList[j].getAttribute('data-long'),
+        latitude: $moreInfoNodeList[j].getAttribute('data-latt')
+      };
+      if (JSON.stringify(placeData) === JSON.stringify(locationEntryData)) {
+        $locationEntryNodeList[j].remove();
+      }
+      if ($locations.children.length === 0) {
+        toggleNoPlaces();
+      }
+    } $deleteOverlay.className = 'row hidden';
+    data.currentPlace = null;
+    swapView('locations');
+  }
+});

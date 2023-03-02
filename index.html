@@ -26,8 +26,9 @@
   <main>
     <div class="container">
       <div class="row">
-        <div class="column-full">
+        <div class="column-full space-between">
           <h1 class="view-heading dark-purple">Search</h1>
+          <button id="delete-button" type="button" class="hidden">Delete Place</button>
         </div>
       </div>
       <div id="search-page">
@@ -68,14 +69,25 @@
           </div>
         </form>
       </div>
-      <div id="more-info-page" class="hidden"></div>
+      <div id="more-info-page" class="hidden">
+        <img src="http://www.7timer.info/bin/civil.php?lon=-117.8&lat=33.7&ac=0&lang=en&unit=british&output=internal&tzshift=0" alt="placeholder">
+      </div>
     </div>
     <div id="added-overlay" class="row hidden">
       <div class="column-full popup">
         <p id="added"></p>
-        <section class="space-around">
+        <section class="space-evenly">
           <button id="cancel-button" type="button">Cancel</button>
           <button class="to-locations-button" type="button">Locations</button>
+        </section>
+      </div>
+    </div>
+    <div id="delete-overlay" class="row hidden">
+      <div class="column-full popup">
+        <p id="delete-confirmation"></p>
+        <section class="space-evenly">
+          <button id="no-button" type="button">NO</button>
+          <button id="yes-button" type="button">YES</button>
         </section>
       </div>
     </div>
