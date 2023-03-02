@@ -188,30 +188,31 @@ function swapView(view) {
     $locationsPage.className = 'hidden';
     $settingsPage.className = 'hidden';
     $moreInfoPage.className = 'hidden';
-    $deleteButton.className = 'hidden';
   } else if (view === 'locations') {
     $viewHeading.textContent = 'Locations';
     $searchPage.className = 'hidden';
     $locationsPage.className = '';
     $settingsPage.className = 'hidden';
     $moreInfoPage.className = 'hidden';
-    $deleteButton.className = 'hidden';
   } else if (view === 'settings') {
     $viewHeading.textContent = 'Settings';
     $searchPage.className = 'hidden';
     $locationsPage.className = 'hidden';
     $settingsPage.className = '';
     $moreInfoPage.className = 'hidden';
-    $deleteButton.className = 'hidden';
   } else if (view === 'more-info') {
     $viewHeading.textContent = data.currentPlace.name;
     $searchPage.className = 'hidden';
     $locationsPage.className = 'hidden';
     $settingsPage.className = 'hidden';
     $moreInfoPage.className = '';
-    $deleteButton.className = '';
   }
   data.view = view;
+  if (data.view === 'more-info') {
+    $deleteButton.className = '';
+  } else {
+    $deleteButton.className = 'hidden';
+  }
 }
 
 function toggleNoPlaces() {
@@ -252,4 +253,8 @@ $locations.addEventListener('click', function (event) {
     }
     swapView('more-info');
   }
+});
+
+$deleteButton.addEventListener('click', function () {
+
 });
