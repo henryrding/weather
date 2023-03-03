@@ -19,6 +19,7 @@ var $deleteConfirmation = document.querySelector('#delete-confirmation');
 var $deleteOverlay = document.querySelector('#delete-overlay');
 var $buttonRow = document.querySelector('#button-row');
 var $tbody = document.querySelector('tbody');
+var $dayButtonNodelist = document.querySelectorAll('button[data-index]');
 
 var $unit = data.unit;
 var $7timerUnit = '';
@@ -132,7 +133,7 @@ function renderWeek() {
   xhr.addEventListener('load', function () {
     nameButtonRow(xhr.response.hourly.time[0]);
     data.currentPlaceObject = xhr.response;
-    renderTable('0', data.currentPlaceObject);
+    renderTable(0, data.currentPlaceObject);
   });
   xhr.send();
 }
@@ -155,31 +156,31 @@ function renderTable(dayIndex, object) {
   var startIndex = 0;
   var endIndex = 0;
   switch (dayIndex) {
-    case '0':
+    case 0:
       startIndex = 0;
       endIndex = 23;
       break;
-    case '1':
+    case 1:
       startIndex = 24;
       endIndex = 47;
       break;
-    case '2':
+    case 2:
       startIndex = 48;
       endIndex = 71;
       break;
-    case '3':
+    case 3:
       startIndex = 72;
       endIndex = 95;
       break;
-    case '4':
+    case 4:
       startIndex = 96;
       endIndex = 119;
       break;
-    case '5':
+    case 5:
       startIndex = 120;
       endIndex = 143;
       break;
-    case '6':
+    case 6:
       startIndex = 144;
       endIndex = 167;
       break;
@@ -348,6 +349,16 @@ function toggleNoPlaces() {
   }
 }
 
+function handleActiveButton(index) {
+  for (var i = 0; i < $dayButtonNodelist.length; i++) {
+    if (index === i) {
+      $dayButtonNodelist[i].className = '';
+    } else {
+      $dayButtonNodelist[i].className = 'gray';
+    }
+  }
+}
+
 $navbar.addEventListener('click', function (event) {
   if (event.target.id === 'search-button') {
     swapView('search');
@@ -388,7 +399,8 @@ $locations.addEventListener('click', function (event) {
 
 $buttonRow.addEventListener('click', function (event) {
   if (event.target.tagName === 'BUTTON') {
-    var index = event.target.getAttribute(['data-index']);
+    var index = Number(event.target.getAttribute(['data-index']));
+    handleActiveButton(index);
     renderTable(index, data.currentPlaceObject);
   }
 });
