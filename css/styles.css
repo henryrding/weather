@@ -31,7 +31,8 @@ li,
   font-weight: bold;
 }
 
-li.location-entry {
+li.location-entry,
+#hourly-table {
   margin-bottom: 1rem;
 }
 
@@ -68,7 +69,7 @@ img {
 }
 
 .padding {
-  padding: 0 1rem;
+  padding: 0 1rem 0.5rem;
 }
 
 .margin-right {
@@ -225,21 +226,19 @@ input[type="radio"]:hover {
   }
 }
 
-@media screen and (min-width: 768px) {
-  .center {
-    align-items: center;
-  }
-}
-
 @media screen and (max-width: 660px) {
   .apparent-temperature {
     display: none;
   }
 }
 
-@media screen and (min-width: 532px) {
+@media screen and (min-width: 609px) {
   .location-entry {
-    max-width: 532px;
+    max-width: 544px;
+  }
+
+  .center {
+    align-items: center;
   }
 }
 
