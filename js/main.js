@@ -133,7 +133,8 @@ function renderWeek() {
   xhr.addEventListener('load', function () {
     nameButtonRow(xhr.response.hourly.time[0]);
     data.currentPlaceObject = xhr.response;
-    renderTable(0, data.currentPlaceObject);
+    handleActiveButton(data.dayView);
+    renderTable(data.dayView, data.currentPlaceObject);
   });
   xhr.send();
 }
@@ -235,9 +236,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
   if ($locations.children.length > 0) {
     toggleNoPlaces();
   }
-  var $currentPlace = renderCurrentPlace();
-  $moreInfoPage.prepend($currentPlace);
-  renderWeek();
+  if (data.currentPlace !== null) {
+    var $currentPlace = renderCurrentPlace();
+    $moreInfoPage.prepend($currentPlace);
+    renderWeek();
+  }
 });
 
 function getResults(string) {
@@ -388,10 +391,11 @@ $locations.addEventListener('click', function (event) {
       }
     }
     if ($moreInfoPage.childElementCount > 1) {
-      $moreInfoPage.removeChild($moreInfoPage.childNodes[0]);
+      $moreInfoPage.removeChild($moreInfoPage.firstChild);
     }
     var $currentPlace = renderCurrentPlace();
     $moreInfoPage.prepend($currentPlace);
+    data.dayView = 0;
     renderWeek();
     swapView('more-info');
   }
@@ -400,8 +404,9 @@ $locations.addEventListener('click', function (event) {
 $buttonRow.addEventListener('click', function (event) {
   if (event.target.tagName === 'BUTTON') {
     var index = Number(event.target.getAttribute(['data-index']));
-    handleActiveButton(index);
-    renderTable(index, data.currentPlaceObject);
+    data.dayView = index;
+    handleActiveButton(data.dayView);
+    renderTable(data.dayView, data.currentPlaceObject);
   }
 });
 
@@ -436,6 +441,7 @@ $deleteOverlay.addEventListener('click', function (event) {
       }
     } $deleteOverlay.className = 'row hidden';
     data.currentPlace = null;
+    data.currentPlaceObject = null;
     swapView('locations');
   }
 });
