@@ -71,17 +71,20 @@ table {
   width: 100%;
   white-space: nowrap;
   border-collapse: collapse;
+  background-color: #e5f8fa;
+  border: #1c0749 0.2rem solid;
 }
 
 th {
-  border: #1c0749 2px solid;
+  border: #1c0749 0.2rem solid;
   padding: 0.1rem 0.5rem;
   color: rgba(0, 0, 0, 60%);
 }
 
 td {
   color: #1c0749;
-  border: #1c0749 2px solid;
+  border: #1c0749 0.1rem solid;
+  font-weight: bold;
 }
 
 .inline {
@@ -199,13 +202,13 @@ input[type="radio"]:hover {
   margin: 0 1rem;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 890px) {
   .snow {
     display: none;
   }
 }
 
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 830px) {
   .rain,
   .showers {
     display: none;
@@ -218,7 +221,7 @@ input[type="radio"]:hover {
   }
 }
 
-@media screen and (max-width: 652px) {
+@media screen and (max-width: 660px) {
   .apparent-temperature {
     display: none;
   }
