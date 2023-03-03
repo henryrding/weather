@@ -56,12 +56,15 @@
         <form id="settings-form">
           <div class="settings">
             <h4>Unit</h4>
-            <div id="radio-inputs">
-              <input type="radio" name="unit" id="metric" value="metric">
-              <label for="metric" class="settings-sub-header">Celsius</label>
-
-              <input type="radio" name="unit" id="imperial" value="imperial">
-              <label for="imperial" class="settings-sub-header">Fahrenheit</label>
+            <div id="radio-inputs" class="dark-purple display-flex">
+              <div class="row margin-right">
+                <input type="radio" name="unit" id="metric" value="metric">
+                <label for="metric" class="settings-sub-header">Metric (&deg;C, mm, Kmh)</label>
+              </div>
+              <div class="row">
+                <input type="radio" name="unit" id="imperial" value="imperial">
+                <label for="imperial" class="settings-sub-header">Imperial (&deg;F, inch, mph)</label>
+              </div>
             </div>
           </div>
           <div class="form-actions">
@@ -70,7 +73,31 @@
         </form>
       </div>
       <div id="more-info-page" class="hidden">
-        <img src="http://www.7timer.info/bin/civil.php?lon=-117.8&lat=33.7&ac=0&lang=en&unit=british&output=internal&tzshift=0" alt="placeholder">
+        <div id="button-row" class="row">
+          <button data-index="0" type="button" class="">Today</button>
+          <button data-index="1" type="button" class="gray"></button>
+          <button data-index="2" type="button" class="gray"></button>
+          <button data-index="3" type="button" class="gray"></button>
+          <button data-index="4" type="button" class="gray"></button>
+          <button data-index="5" type="button" class="gray"></button>
+          <button data-index="6" type="button" class="gray"></button>
+        </div>
+        <table id="hourly-table">
+          <thead>
+            <tr>
+              <th class="time">Time</th>
+              <th class="tempurature">Temperature</th>
+              <th class="apparent-temperature">Apparent Temperature</th>
+              <th class="precipitation">Precip. %</th>
+              <th class="rain">Rain</th>
+              <th class="showers">Showers</th>
+              <th class="snow">Snow</th>
+              <th class="cloud">Cloud %</th>
+              <th class="wind">Wind</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
     <div id="added-overlay" class="row hidden">

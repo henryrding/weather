@@ -17,27 +17,30 @@ var $settingsForm = document.querySelector('#settings-form');
 var $deleteButton = document.querySelector('#delete-button');
 var $deleteConfirmation = document.querySelector('#delete-confirmation');
 var $deleteOverlay = document.querySelector('#delete-overlay');
+var $buttonRow = document.querySelector('#button-row');
+var $tbody = document.querySelector('tbody');
+var $dayButtonNodelist = document.querySelectorAll('button[data-index]');
 
 var $unit = data.unit;
 var $7timerUnit = '';
 var $openmeteoTempUnit = '';
 var $openmeteoWindUnit = '';
 var $openmeteoPrecipitationUnit = '';
+var $degree = '';
 
 if ($unit === 'metric') {
   $7timerUnit = '';
   $openmeteoTempUnit = 'celsius';
   $openmeteoWindUnit = 'kmh';
   $openmeteoPrecipitationUnit = 'mm';
+  $degree = '\u00B0C';
 } else if ($unit === 'imperial') {
   $7timerUnit = 'british';
   $openmeteoTempUnit = 'fahrenheit';
   $openmeteoWindUnit = 'mph';
   $openmeteoPrecipitationUnit = 'inch';
+  $degree = '\u00B0F';
 }
-
-// to get rid of lint error, placeholder variables
-capitalizeCity($openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit);
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -86,10 +89,10 @@ function renderPlace(place) {
   $div3.className = 'row';
   $div.appendChild($div3);
   var $div4 = document.createElement('div');
-  $div4.className = 'column-full';
+  $div4.className = 'column-full padding';
   $div3.appendChild($div4);
   var $img = document.createElement('img');
-  $img.alt = 'One Week Forecast Graphic for ' + place.name;
+  $img.alt = 'One Week Daily Forecast Graphic for ' + place.name;
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
@@ -106,6 +109,125 @@ function renderPlace(place) {
   return $li;
 }
 
+function renderCurrentPlace() {
+  var $img = document.createElement('img');
+  $img.alt = 'One Week Tri-Hourly Forecast Graphic for ' + data.currentPlace.name;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://www.7timer.info/bin/civil.php?lon=' + data.currentPlace.longitude + '&lat=' + data.currentPlace.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
+  xhr.responseType = 'arraybuffer';
+  xhr.addEventListener('load', function () {
+    var arrayBufferView = new Uint8Array(this.response);
+    var blob = new Blob([arrayBufferView], { type: 'image/jpeg' });
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(blob);
+    $img.src = imageUrl;
+  });
+  xhr.send();
+  return $img;
+}
+
+function renderWeek() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + data.currentPlace.latitude + '&longitude=' + data.currentPlace.longitude + '&hourly=temperature_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,cloudcover,windspeed_10m&temperature_unit=' + $openmeteoTempUnit + '&windspeed_unit=' + $openmeteoWindUnit + '&precipitation_unit=' + $openmeteoPrecipitationUnit + '&timezone=auto');
+  xhr.responseType = 'json';
+  xhr.addEventListener('load', function () {
+    nameButtonRow(xhr.response.hourly.time[0]);
+    data.currentPlaceObject = xhr.response;
+    handleActiveButton(data.dayView);
+    renderTable(data.dayView, data.currentPlaceObject);
+  });
+  xhr.send();
+}
+
+function nameButtonRow(hour) {
+  var time = new Date(hour);
+  var currentDayIndex = time.getDay();
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  var daysIndex = currentDayIndex;
+  for (var i = 1; i < 7; i++) {
+    daysIndex++;
+    $buttonRow.children[i].textContent = days[daysIndex];
+  }
+}
+
+function renderTable(dayIndex, object) {
+  while ($tbody.firstChild) {
+    $tbody.removeChild($tbody.lastChild);
+  }
+  var startIndex = 0;
+  var endIndex = 0;
+  switch (dayIndex) {
+    case 0:
+      startIndex = 0;
+      endIndex = 23;
+      break;
+    case 1:
+      startIndex = 24;
+      endIndex = 47;
+      break;
+    case 2:
+      startIndex = 48;
+      endIndex = 71;
+      break;
+    case 3:
+      startIndex = 72;
+      endIndex = 95;
+      break;
+    case 4:
+      startIndex = 96;
+      endIndex = 119;
+      break;
+    case 5:
+      startIndex = 120;
+      endIndex = 143;
+      break;
+    case 6:
+      startIndex = 144;
+      endIndex = 167;
+      break;
+  }
+  for (var i = startIndex; i <= endIndex; i++) {
+    var $tr = document.createElement('tr');
+    var $tdTime = document.createElement('td');
+    $tdTime.className = 'time';
+    $tdTime.textContent = object.hourly.time[i].slice(-5);
+    $tr.appendChild($tdTime);
+    var $tdTemperature = document.createElement('td');
+    $tdTemperature.className = 'temperature';
+    $tdTemperature.textContent = object.hourly.temperature_2m[i] + $degree;
+    $tr.appendChild($tdTemperature);
+    var $tdApparentTemperature = document.createElement('td');
+    $tdApparentTemperature.className = 'apparent-temperature';
+    $tdApparentTemperature.textContent = object.hourly.apparent_temperature[i] + $degree;
+    $tr.appendChild($tdApparentTemperature);
+    var $tdPrecipitation = document.createElement('td');
+    $tdPrecipitation.className = 'precipitation';
+    $tdPrecipitation.textContent = object.hourly.precipitation_probability[i] + '%';
+    $tr.appendChild($tdPrecipitation);
+    var $tdRain = document.createElement('td');
+    $tdRain.className = 'rain';
+    $tdRain.textContent = object.hourly.rain[i] + $openmeteoPrecipitationUnit;
+    $tr.appendChild($tdRain);
+    var $tdShowers = document.createElement('td');
+    $tdShowers.className = 'showers';
+    $tdShowers.textContent = object.hourly.showers[i] + $openmeteoPrecipitationUnit;
+    $tr.appendChild($tdShowers);
+    var $tdSnow = document.createElement('td');
+    $tdSnow.className = 'snow';
+    $tdSnow.textContent = object.hourly.snowfall[i] + $openmeteoPrecipitationUnit;
+    $tr.appendChild($tdSnow);
+    var $tdCloud = document.createElement('td');
+    $tdCloud.className = 'cloud';
+    $tdCloud.textContent = object.hourly.cloudcover[i] + '%';
+    $tr.appendChild($tdCloud);
+    var $tdWind = document.createElement('td');
+    $tdWind.className = 'wind';
+    $tdWind.textContent = object.hourly.windspeed_10m[i] + $openmeteoWindUnit;
+    $tr.appendChild($tdWind);
+    $tbody.appendChild($tr);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function (event) {
   for (var i = 0; i < data.places.length; i++) {
     var $placeTree = renderPlace(data.places[i]);
@@ -113,6 +235,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
   } swapView(data.view);
   if ($locations.children.length > 0) {
     toggleNoPlaces();
+  }
+  if (data.currentPlace !== null) {
+    var $currentPlace = renderCurrentPlace();
+    $moreInfoPage.prepend($currentPlace);
+    renderWeek();
   }
 });
 
@@ -225,6 +352,16 @@ function toggleNoPlaces() {
   }
 }
 
+function handleActiveButton(index) {
+  for (var i = 0; i < $dayButtonNodelist.length; i++) {
+    if (index === i) {
+      $dayButtonNodelist[i].className = '';
+    } else {
+      $dayButtonNodelist[i].className = 'gray';
+    }
+  }
+}
+
 $navbar.addEventListener('click', function (event) {
   if (event.target.id === 'search-button') {
     swapView('search');
@@ -253,7 +390,23 @@ $locations.addEventListener('click', function (event) {
         data.currentPlace = data.places[i];
       }
     }
+    if ($moreInfoPage.childElementCount > 1) {
+      $moreInfoPage.removeChild($moreInfoPage.firstChild);
+    }
+    var $currentPlace = renderCurrentPlace();
+    $moreInfoPage.prepend($currentPlace);
+    data.dayView = 0;
+    renderWeek();
     swapView('more-info');
+  }
+});
+
+$buttonRow.addEventListener('click', function (event) {
+  if (event.target.tagName === 'BUTTON') {
+    var index = Number(event.target.getAttribute(['data-index']));
+    data.dayView = index;
+    handleActiveButton(data.dayView);
+    renderTable(data.dayView, data.currentPlaceObject);
   }
 });
 
@@ -288,6 +441,7 @@ $deleteOverlay.addEventListener('click', function (event) {
       }
     } $deleteOverlay.className = 'row hidden';
     data.currentPlace = null;
+    data.currentPlaceObject = null;
     swapView('locations');
   }
 });

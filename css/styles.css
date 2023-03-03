@@ -31,7 +31,8 @@ li,
   font-weight: bold;
 }
 
-li.location-entry {
+li.location-entry,
+#hourly-table {
   margin-bottom: 1rem;
 }
 
@@ -63,7 +64,39 @@ form {
 
 img {
   width: 100%;
-  padding: 0 1rem 1rem;
+  border: #1c0749 0.2rem solid;
+  border-radius: 0.5rem;
+}
+
+.padding {
+  padding: 0 1rem 0.5rem;
+}
+
+.margin-right {
+  margin-right: 1rem;
+}
+
+table {
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #e5f8fa;
+  border: #1c0749 0.2rem solid;
+  border-radius: 0.5rem;
+}
+
+th {
+  border-bottom: #1c0749 0.2rem solid;
+  padding: 0.1rem 0.5rem;
+  color: rgba(0, 0, 0, 60%);
+}
+
+td {
+  color: #1c0749;
+  border: #1c0749 0.1rem solid;
+  font-weight: bold;
 }
 
 .inline {
@@ -80,6 +113,10 @@ img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.display-flex {
+  display: flex;
 }
 
 .space-evenly {
@@ -100,11 +137,6 @@ img {
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: 12rem;
-}
-
-#radio-inputs,
-input[type="radio"] {
-  color: #1c0749;
 }
 
 .dark-purple {
@@ -143,9 +175,10 @@ button {
   color: white;
   border: #1c0749 solid 0.1rem;
   border-radius: 0.2rem;
-  padding: 0.4rem;
+  padding: 0.4rem 0.6rem;
   width: auto;
   white-space: nowrap;
+  font-weight: bold;
 }
 
 #delete-button {
@@ -154,6 +187,14 @@ button {
 
 #yes-button {
   background-color: red;
+}
+
+#button-row {
+  justify-content: center;
+}
+
+.gray {
+  color: rgba(0, 0, 0, 60%);
 }
 
 button:hover,
@@ -172,14 +213,41 @@ input[type="radio"]:hover {
   margin: 0 1rem;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 890px) {
+  .snow {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .rain,
+  .showers {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .apparent-temperature {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 609px) {
+  .location-entry {
+    max-width: 544px;
+  }
+
   .center {
     align-items: center;
   }
 }
 
-@media screen and (min-width: 532px) {
-  .location-entry {
-    max-width: 532px;
+@media screen and (max-width: 450px) {
+  .wind {
+    display: none;
+  }
+
+  .display-flex {
+    display: block;
   }
 }

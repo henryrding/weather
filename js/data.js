@@ -2,6 +2,8 @@
 var data = {
   places: [],
   currentPlace: null,
+  currentPlaceObject: null,
+  dayView: null,
   view: 'search',
   unit: 'metric'
 };
