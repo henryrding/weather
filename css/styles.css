@@ -66,6 +66,24 @@ img {
   padding: 0 1rem 1rem;
 }
 
+table {
+  text-align: center;
+  width: 100%;
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+
+th {
+  border: #1c0749 2px solid;
+  padding: 0.1rem 0.5rem;
+  color: rgba(0, 0, 0, 60%);
+}
+
+td {
+  color: #1c0749;
+  border: #1c0749 2px solid;
+}
+
 .inline {
   display: flex;
   align-items: center;
@@ -181,14 +199,39 @@ input[type="radio"]:hover {
   margin: 0 1rem;
 }
 
+@media screen and (max-width: 850px) {
+  .snow {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 790px) {
+  .rain,
+  .showers {
+    display: none;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .center {
     align-items: center;
   }
 }
 
+@media screen and (max-width: 652px) {
+  .apparent-temperature {
+    display: none;
+  }
+}
+
 @media screen and (min-width: 532px) {
   .location-entry {
     max-width: 532px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .wind {
+    display: none;
   }
 }

@@ -18,27 +18,28 @@ var $deleteButton = document.querySelector('#delete-button');
 var $deleteConfirmation = document.querySelector('#delete-confirmation');
 var $deleteOverlay = document.querySelector('#delete-overlay');
 var $buttonRow = document.querySelector('#button-row');
+var $tbody = document.querySelector('tbody');
 
 var $unit = data.unit;
 var $7timerUnit = '';
 var $openmeteoTempUnit = '';
 var $openmeteoWindUnit = '';
 var $openmeteoPrecipitationUnit = '';
+var $degree = '';
 
 if ($unit === 'metric') {
   $7timerUnit = '';
   $openmeteoTempUnit = 'celsius';
   $openmeteoWindUnit = 'kmh';
   $openmeteoPrecipitationUnit = 'mm';
+  $degree = '\u00B0C';
 } else if ($unit === 'imperial') {
   $7timerUnit = 'british';
   $openmeteoTempUnit = 'fahrenheit';
   $openmeteoWindUnit = 'mph';
   $openmeteoPrecipitationUnit = 'inch';
+  $degree = '\u00B0F';
 }
-
-// to get rid of lint error, placeholder variables
-capitalizeCity($openmeteoTempUnit + $openmeteoWindUnit + $openmeteoPrecipitationUnit);
 
 $searchForm.addEventListener('submit', function () {
   event.preventDefault();
@@ -129,16 +130,100 @@ function renderWeek() {
   xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + data.currentPlace.latitude + '&longitude=' + data.currentPlace.longitude + '&hourly=temperature_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,cloudcover,windspeed_10m&temperature_unit=' + $openmeteoTempUnit + '&windspeed_unit=' + $openmeteoWindUnit + '&precipitation_unit=' + $openmeteoPrecipitationUnit + '&timezone=auto');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
-    var time = new Date(xhr.response.hourly.time[0]);
-    var currentDayIndex = time.getDay();
-    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-    var dayIndex = currentDayIndex;
-    for (var i = 1; i < 7; i++) {
-      dayIndex++;
-      $buttonRow.children[i].textContent = days[dayIndex];
-    }
+    nameButtonRow(xhr.response.hourly.time[0]);
+    data.currentPlaceObject = xhr.response;
+    renderTable(0, data.currentPlaceObject);
   });
   xhr.send();
+}
+
+function nameButtonRow(hour) {
+  var time = new Date(hour);
+  var currentDayIndex = time.getDay();
+  var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  var daysIndex = currentDayIndex;
+  for (var i = 1; i < 7; i++) {
+    daysIndex++;
+    $buttonRow.children[i].textContent = days[daysIndex];
+  }
+}
+
+function renderTable(dayIndex, object) {
+  while ($tbody.childElementCount > 0) {
+    $tbody.removeChild($tbody.childNodes[0]);
+  }
+  var startIndex = 0;
+  var endIndex = 0;
+  switch (dayIndex) {
+    case 0:
+      startIndex = 0;
+      endIndex = 23;
+      break;
+    case 1:
+      startIndex = 24;
+      endIndex = 47;
+      break;
+    case 2:
+      startIndex = 48;
+      endIndex = 71;
+      break;
+    case 3:
+      startIndex = 72;
+      endIndex = 95;
+      break;
+    case 4:
+      startIndex = 96;
+      endIndex = 119;
+      break;
+    case 5:
+      startIndex = 120;
+      endIndex = 143;
+      break;
+    case 6:
+      startIndex = 144;
+      endIndex = 167;
+      break;
+  }
+  for (var i = startIndex; i <= endIndex; i++) {
+    var $tr = document.createElement('tr');
+    var $tdTime = document.createElement('td');
+    $tdTime.className = 'time';
+    $tdTime.textContent = object.hourly.time[i].slice(-5);
+    $tr.appendChild($tdTime);
+    var $tdTemperature = document.createElement('td');
+    $tdTemperature.className = 'temperature';
+    $tdTemperature.textContent = object.hourly.temperature_2m[i] + $degree;
+    $tr.appendChild($tdTemperature);
+    var $tdApparentTemperature = document.createElement('td');
+    $tdApparentTemperature.className = 'apparent-temperature';
+    $tdApparentTemperature.textContent = object.hourly.apparent_temperature[i] + $degree;
+    $tr.appendChild($tdApparentTemperature);
+    var $tdPrecipitation = document.createElement('td');
+    $tdPrecipitation.className = 'precipitation';
+    $tdPrecipitation.textContent = object.hourly.precipitation_probability[i] + '%';
+    $tr.appendChild($tdPrecipitation);
+    var $tdRain = document.createElement('td');
+    $tdRain.className = 'rain';
+    $tdRain.textContent = object.hourly.rain[i] + $openmeteoPrecipitationUnit;
+    $tr.appendChild($tdRain);
+    var $tdShowers = document.createElement('td');
+    $tdShowers.className = 'showers';
+    $tdShowers.textContent = object.hourly.showers[i] + $openmeteoPrecipitationUnit;
+    $tr.appendChild($tdShowers);
+    var $tdSnow = document.createElement('td');
+    $tdSnow.className = 'snow';
+    $tdSnow.textContent = object.hourly.snowfall[i] + $openmeteoPrecipitationUnit;
+    $tr.appendChild($tdSnow);
+    var $tdCloud = document.createElement('td');
+    $tdCloud.className = 'cloud';
+    $tdCloud.textContent = object.hourly.cloudcover[i] + '%';
+    $tr.appendChild($tdCloud);
+    var $tdWind = document.createElement('td');
+    $tdWind.className = 'wind';
+    $tdWind.textContent = object.hourly.windspeed_10m[i] + $openmeteoWindUnit;
+    $tr.appendChild($tdWind);
+    $tbody.appendChild($tr);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
