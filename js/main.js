@@ -89,7 +89,7 @@ function renderPlace(place) {
   $div3.className = 'row';
   $div.appendChild($div3);
   var $div4 = document.createElement('div');
-  $div4.className = 'column-full';
+  $div4.className = 'column-full padding';
   $div3.appendChild($div4);
   var $img = document.createElement('img');
   $img.alt = 'One Week Daily Forecast Graphic for ' + place.name;

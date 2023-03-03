@@ -56,12 +56,15 @@
         <form id="settings-form">
           <div class="settings">
             <h4>Unit</h4>
-            <div id="radio-inputs">
-              <input type="radio" name="unit" id="metric" value="metric">
-              <label for="metric" class="settings-sub-header">Celsius</label>
-
-              <input type="radio" name="unit" id="imperial" value="imperial">
-              <label for="imperial" class="settings-sub-header">Fahrenheit</label>
+            <div id="radio-inputs" class="dark-purple display-flex">
+              <div class="row margin-right">
+                <input type="radio" name="unit" id="metric" value="metric">
+                <label for="metric" class="settings-sub-header">Metric (&deg;C, mm, Kmh)</label>
+              </div>
+              <div class="row">
+                <input type="radio" name="unit" id="imperial" value="imperial">
+                <label for="imperial" class="settings-sub-header">Imperial (&deg;F, inch, mph)</label>
+              </div>
             </div>
           </div>
           <div class="form-actions">

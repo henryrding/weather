@@ -63,20 +63,31 @@ form {
 
 img {
   width: 100%;
-  padding: 0 1rem 1rem;
+  border: #1c0749 0.2rem solid;
+  border-radius: 0.5rem;
+}
+
+.padding {
+  padding: 0 1rem;
+}
+
+.margin-right {
+  margin-right: 1rem;
 }
 
 table {
   text-align: center;
   width: 100%;
   white-space: nowrap;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background-color: #e5f8fa;
   border: #1c0749 0.2rem solid;
+  border-radius: 0.5rem;
 }
 
 th {
-  border: #1c0749 0.2rem solid;
+  border-bottom: #1c0749 0.2rem solid;
   padding: 0.1rem 0.5rem;
   color: rgba(0, 0, 0, 60%);
 }
@@ -103,6 +114,10 @@ td {
   align-items: flex-start;
 }
 
+.display-flex {
+  display: flex;
+}
+
 .space-evenly {
   display: flex;
   justify-content: space-evenly;
@@ -121,11 +136,6 @@ td {
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: 12rem;
-}
-
-#radio-inputs,
-input[type="radio"] {
-  color: #1c0749;
 }
 
 .dark-purple {
@@ -236,5 +246,9 @@ input[type="radio"]:hover {
 @media screen and (max-width: 450px) {
   .wind {
     display: none;
+  }
+
+  .display-flex {
+    display: block;
   }
 }
