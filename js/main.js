@@ -132,7 +132,7 @@ function renderWeek() {
   xhr.addEventListener('load', function () {
     nameButtonRow(xhr.response.hourly.time[0]);
     data.currentPlaceObject = xhr.response;
-    renderTable(0, data.currentPlaceObject);
+    renderTable('0', data.currentPlaceObject);
   });
   xhr.send();
 }
@@ -149,37 +149,37 @@ function nameButtonRow(hour) {
 }
 
 function renderTable(dayIndex, object) {
-  while ($tbody.childElementCount > 0) {
-    $tbody.removeChild($tbody.childNodes[0]);
+  while ($tbody.firstChild) {
+    $tbody.removeChild($tbody.lastChild);
   }
   var startIndex = 0;
   var endIndex = 0;
   switch (dayIndex) {
-    case 0:
+    case '0':
       startIndex = 0;
       endIndex = 23;
       break;
-    case 1:
+    case '1':
       startIndex = 24;
       endIndex = 47;
       break;
-    case 2:
+    case '2':
       startIndex = 48;
       endIndex = 71;
       break;
-    case 3:
+    case '3':
       startIndex = 72;
       endIndex = 95;
       break;
-    case 4:
+    case '4':
       startIndex = 96;
       endIndex = 119;
       break;
-    case 5:
+    case '5':
       startIndex = 120;
       endIndex = 143;
       break;
-    case 6:
+    case '6':
       startIndex = 144;
       endIndex = 167;
       break;
@@ -383,6 +383,13 @@ $locations.addEventListener('click', function (event) {
     $moreInfoPage.prepend($currentPlace);
     renderWeek();
     swapView('more-info');
+  }
+});
+
+$buttonRow.addEventListener('click', function (event) {
+  if (event.target.tagName === 'BUTTON') {
+    var index = event.target.getAttribute(['data-index']);
+    renderTable(index, data.currentPlaceObject);
   }
 });
 
