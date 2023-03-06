@@ -128,7 +128,7 @@ function renderCurrentPlace() {
 
 function renderWeek() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + data.currentPlace.latitude + '&longitude=' + data.currentPlace.longitude + '&hourly=temperature_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,cloudcover,windspeed_10m&temperature_unit=' + $openmeteoTempUnit + '&windspeed_unit=' + $openmeteoWindUnit + '&precipitation_unit=' + $openmeteoPrecipitationUnit + '&timezone=auto');
+  xhr.open('GET', 'https://api.open-meteo.com/v1/forecast?latitude=' + data.currentPlace.latitude + '&longitude=' + data.currentPlace.longitude + '&hourly=temperature_2m,apparent_temperature,precipitation_probability,rain,showers,snowfall,cloudcover,windspeed_10m&temperature_unit=' + $openmeteoTempUnit + '&windspeed_unit=' + $openmeteoWindUnit + '&precipitation_unit=' + $openmeteoPrecipitationUnit + '&daily=sunrise,sunset&current_weather=true&timezone=auto');
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     nameButtonRow(xhr.response.hourly.time[0]);
