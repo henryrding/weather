@@ -21,6 +21,7 @@ var $currentWeatherOverlay = document.querySelector('#current-weather-overlay');
 var $currentWeatherPlace = document.querySelector('#current-weather-place');
 var $currentWeatherTemp = document.querySelector('#current-weather-temperature');
 var $currentWeatherWeathercode = document.querySelector('#current-weather-weathercode');
+var $currentWeatherIcon = document.querySelector('#current-weather-icon');
 var $buttonRow = document.querySelector('#button-row');
 var $tbody = document.querySelector('tbody');
 var $dayButtonNodelist = document.querySelectorAll('button[data-index]');
@@ -161,7 +162,6 @@ function renderCurrentWeather() {
 }
 
 function handleWeathercode(weathercode) {
-  var $currentWeatherIcon = document.querySelector('#current-weather-icon');
   switch (weathercode) {
     case 0:
       $currentWeatherIcon.className = 'dark-purple fa-solid fa-sun fa-2x';
@@ -517,6 +517,10 @@ $locations.addEventListener('click', function (event) {
 $currentWeatherOverlay.addEventListener('click', function (event) {
   if (event.target.id === 'ok-button') {
     $currentWeatherOverlay.className = 'row hidden';
+    $currentWeatherPlace.textContent = '';
+    $currentWeatherTemp.textContent = '';
+    $currentWeatherIcon.className = '';
+    $currentWeatherWeathercode.textContent = '';
   }
 });
 
