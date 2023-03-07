@@ -24,11 +24,17 @@ a {
 }
 
 li,
-#added,
+p,
 .settings > h4 {
   color: #1c0749;
   font-size: 1.8rem;
   font-weight: bold;
+  white-space: pre;
+}
+
+li,
+p {
+  margin-top: 0%;
 }
 
 li.location-entry,
@@ -154,7 +160,8 @@ td {
 }
 
 #added-overlay,
-#delete-overlay {
+#delete-overlay,
+#current-weather-overlay {
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 75%);
   position: fixed;
@@ -189,8 +196,12 @@ button {
   background-color: red;
 }
 
-#button-row {
+#button-row,
+#delete-confirmation,
+#current-weather-place,
+#current-weather-text {
   justify-content: center;
+  text-align: center;
 }
 
 .gray {
