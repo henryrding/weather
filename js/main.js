@@ -421,7 +421,7 @@ $buttonRow.addEventListener('click', function (event) {
 });
 
 $deleteButton.addEventListener('click', function () {
-  $deleteConfirmation.textContent = 'Are you sure you want to delete ' + data.currentPlace.name + '?';
+  $deleteConfirmation.textContent = data.currentPlace.name + '?';
   $deleteOverlay.className = 'row';
 });
 
