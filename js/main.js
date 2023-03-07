@@ -79,11 +79,11 @@ function renderPlace(place) {
   $h4.textContent = place.name;
   $div2.appendChild($h4);
   var $button = document.createElement('button');
-  $button.className = 'more-info-button';
+  $button.className = 'current-weather-button';
   $button.setAttribute('data-long', place.longitude);
   $button.setAttribute('data-latt', place.latitude);
   $button.setAttribute('data-name', place.name);
-  $button.textContent = 'More Info';
+  $button.textContent = 'Current Weather';
   $div2.appendChild($button);
   var $div3 = document.createElement('div');
   $div3.className = 'row';
@@ -93,6 +93,16 @@ function renderPlace(place) {
   $div3.appendChild($div4);
   var $img = document.createElement('img');
   $img.alt = 'One Week Daily Forecast Graphic for ' + place.name;
+  var $div5 = document.createElement('div');
+  $div5.className = 'row';
+  $div.appendChild($div5);
+  var $button1 = document.createElement('button');
+  $button1.className = 'more-info-button';
+  $button1.setAttribute('data-long', place.longitude);
+  $button1.setAttribute('data-latt', place.latitude);
+  $button1.setAttribute('data-name', place.name);
+  $button1.textContent = 'More Info';
+  $div5.appendChild($button1);
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://www.7timer.info/bin/civillight.php?lon=' + place.longitude + '&lat=' + place.latitude + '&ac=0&lang=en&unit=' + $7timerUnit + '&output=internal&tzshift=0');
