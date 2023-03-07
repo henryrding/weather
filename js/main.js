@@ -486,21 +486,6 @@ function onPageLoad() {
 }
 
 $locations.addEventListener('click', function (event) {
-  // if (event.target.className === 'more-info-button' || event.target.className === 'current-weather-button') {
-  //   for (var i = 0; i < data.places.length; i++) {
-  //     if (data.places[i].name === event.target.getAttribute('data-name') && data.places[i].longitude === event.target.getAttribute('data-long') && data.places[i].latitude === event.target.getAttribute('data-latt')) {
-  //       data.currentPlace = data.places[i];
-  //     }
-  //   }
-  //   if ($moreInfoPage.childElementCount > 1) {
-  //     $moreInfoPage.removeChild($moreInfoPage.firstChild);
-  //   }
-  //   var $currentPlace = renderCurrentPlace();
-  //   $moreInfoPage.prepend($currentPlace);
-  //   data.dayView = 0;
-  //   renderWeek();
-  //   swapView('more-info');
-  // }
   switch (event.target.className) {
     case 'more-info-button':
       for (var i = 0; i < data.places.length; i++) {
@@ -526,6 +511,12 @@ $locations.addEventListener('click', function (event) {
       renderWeek();
       $currentWeatherOverlay.className = 'row';
       break;
+  }
+});
+
+$currentWeatherOverlay.addEventListener('click', function (event) {
+  if (event.target.id === 'ok-button') {
+    $currentWeatherOverlay.className = 'row hidden';
   }
 });
 
