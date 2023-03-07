@@ -17,6 +17,10 @@ var $settingsForm = document.querySelector('#settings-form');
 var $deleteButton = document.querySelector('#delete-button');
 var $deleteConfirmation = document.querySelector('#delete-confirmation');
 var $deleteOverlay = document.querySelector('#delete-overlay');
+var $currentWeatherOverlay = document.querySelector('#current-weather-overlay');
+var $currentWeatherPlace = document.querySelector('#current-weather-place');
+var $currentWeatherTemp = document.querySelector('#current-weather-temperature');
+var $currentWeatherWeathercode = document.querySelector('#current-weather-weathercode');
 var $buttonRow = document.querySelector('#button-row');
 var $tbody = document.querySelector('tbody');
 var $dayButtonNodelist = document.querySelectorAll('button[data-index]');
@@ -145,8 +149,96 @@ function renderWeek() {
     data.currentPlaceObject = xhr.response;
     handleActiveButton(data.dayView);
     renderTable(data.dayView, data.currentPlaceObject);
+    renderCurrentWeather();
   });
   xhr.send();
+}
+
+function renderCurrentWeather() {
+  $currentWeatherPlace.textContent = data.currentPlace.name;
+  $currentWeatherTemp.textContent = data.currentPlaceObject.current_weather.temperature + $degree + ' ';
+  $currentWeatherWeathercode.textContent = ' ' + handleWeathercode(data.currentPlaceObject.current_weather.weathercode);
+}
+
+function handleWeathercode(weathercode) {
+  var $currentWeatherIcon = document.querySelector('#current-weather-icon');
+  switch (weathercode) {
+    case 0:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-sun fa-2x';
+      return 'Clear Sky';
+    case 1:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-sun fa-2x';
+      return 'Mainly Clear';
+    case 2:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-sun fa-2x';
+      return 'Partly Cloudy';
+    case 3:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud fa-2x';
+      return 'Overcast';
+    case 45:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-smog fa-2x';
+      return 'Fog';
+    case 48:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-smog fa-2x';
+      return 'Depositing Rime Fog';
+    case 51:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-rain fa-2x';
+      return 'Light Drizzle';
+    case 53:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-rain fa-2x';
+      return 'Moderate Drizzle';
+    case 55:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-rain fa-2x';
+      return 'Dense Drizzle';
+    case 56:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
+      return 'Light Freezing Drizzle';
+    case 57:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
+      return 'Dense Freezing Drizzle';
+    case 61:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-rain fa-2x';
+      return 'Slight Rain';
+    case 63:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-rain fa-2x';
+      return 'Moderate Rain';
+    case 65:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-showers-heavy fa-2x';
+      return 'Heavy Rain';
+    case 66:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
+      return 'Light Freezing Rain';
+    case 67:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
+      return 'Heavy Freezing Rain';
+    case 71:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-snowflake fa-2x';
+      return 'Slight Snow Fall';
+    case 73:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-snowflake fa-2x';
+      return 'Moderate Snow Fall';
+    case 75:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-snowflake fa-2x';
+      return 'Heavy Snow Fall';
+    case 77:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-snowflake fa-2x';
+      return 'Snow Grains';
+    case 80:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-rain fa-2x';
+      return 'Slight Rain Showers';
+    case 81:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-showers-heavy fa-2x';
+      return 'Moderate Rain Showers';
+    case 82:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-showers-water fa-2x';
+      return 'Violent Rain Showers';
+    case 85:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
+      return 'Slight Snow Showers';
+    case 86:
+      $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
+      return 'Heavy Snow Showers';
+  }
 }
 
 function nameButtonRow(hour) {
@@ -394,20 +486,46 @@ function onPageLoad() {
 }
 
 $locations.addEventListener('click', function (event) {
-  if (event.target.className === 'more-info-button') {
-    for (var i = 0; i < data.places.length; i++) {
-      if (data.places[i].name === event.target.getAttribute('data-name') && data.places[i].longitude === event.target.getAttribute('data-long') && data.places[i].latitude === event.target.getAttribute('data-latt')) {
-        data.currentPlace = data.places[i];
+  // if (event.target.className === 'more-info-button' || event.target.className === 'current-weather-button') {
+  //   for (var i = 0; i < data.places.length; i++) {
+  //     if (data.places[i].name === event.target.getAttribute('data-name') && data.places[i].longitude === event.target.getAttribute('data-long') && data.places[i].latitude === event.target.getAttribute('data-latt')) {
+  //       data.currentPlace = data.places[i];
+  //     }
+  //   }
+  //   if ($moreInfoPage.childElementCount > 1) {
+  //     $moreInfoPage.removeChild($moreInfoPage.firstChild);
+  //   }
+  //   var $currentPlace = renderCurrentPlace();
+  //   $moreInfoPage.prepend($currentPlace);
+  //   data.dayView = 0;
+  //   renderWeek();
+  //   swapView('more-info');
+  // }
+  switch (event.target.className) {
+    case 'more-info-button':
+      for (var i = 0; i < data.places.length; i++) {
+        if (data.places[i].name === event.target.getAttribute('data-name') && data.places[i].longitude === event.target.getAttribute('data-long') && data.places[i].latitude === event.target.getAttribute('data-latt')) {
+          data.currentPlace = data.places[i];
+        }
       }
-    }
-    if ($moreInfoPage.childElementCount > 1) {
-      $moreInfoPage.removeChild($moreInfoPage.firstChild);
-    }
-    var $currentPlace = renderCurrentPlace();
-    $moreInfoPage.prepend($currentPlace);
-    data.dayView = 0;
-    renderWeek();
-    swapView('more-info');
+      if ($moreInfoPage.childElementCount > 1) {
+        $moreInfoPage.removeChild($moreInfoPage.firstChild);
+      }
+      var $currentPlace = renderCurrentPlace();
+      $moreInfoPage.prepend($currentPlace);
+      data.dayView = 0;
+      renderWeek();
+      swapView('more-info');
+      break;
+    case 'current-weather-button':
+      for (var j = 0; j < data.places.length; j++) {
+        if (data.places[j].name === event.target.getAttribute('data-name') && data.places[j].longitude === event.target.getAttribute('data-long') && data.places[j].latitude === event.target.getAttribute('data-latt')) {
+          data.currentPlace = data.places[j];
+        }
+      }
+      renderWeek();
+      $currentWeatherOverlay.className = 'row';
+      break;
   }
 });
 
