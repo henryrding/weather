@@ -215,7 +215,7 @@ button {
 }
 
 button:hover,
-i:hover,
+#settings-button:hover,
 input[type="radio"]:hover {
   cursor: pointer;
 }
