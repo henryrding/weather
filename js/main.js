@@ -22,6 +22,7 @@ var $currentWeatherPlace = document.querySelector('#current-weather-place');
 var $currentWeatherTemp = document.querySelector('#current-weather-temperature');
 var $currentWeatherWeathercode = document.querySelector('#current-weather-weathercode');
 var $currentWeatherIcon = document.querySelector('#current-weather-icon');
+var $currentWeatherBackground = document.querySelector('#current-weather-background');
 var $buttonRow = document.querySelector('#button-row');
 var $tbody = document.querySelector('tbody');
 var $dayButtonNodelist = document.querySelectorAll('button[data-index]');
@@ -159,6 +160,7 @@ function renderCurrentWeather() {
   $currentWeatherPlace.textContent = data.currentPlace.name;
   $currentWeatherTemp.textContent = data.currentPlaceObject.current_weather.temperature + $degree + ' ';
   $currentWeatherWeathercode.textContent = ' ' + handleWeathercode(data.currentPlaceObject.current_weather.weathercode);
+  handleCurrentWeatherBackground();
 }
 
 function handleWeathercode(weathercode) {
@@ -238,6 +240,14 @@ function handleWeathercode(weathercode) {
     case 86:
       $currentWeatherIcon.className = 'dark-purple fa-solid fa-cloud-meatball fa-2x';
       return 'Heavy Snow Showers';
+  }
+}
+
+function handleCurrentWeatherBackground() {
+  if (data.currentPlaceObject.current_weather.time.slice(-5) > data.currentPlaceObject.daily.sunrise[0].slice(-5) && data.currentPlaceObject.current_weather.time.slice(-5) < data.currentPlaceObject.daily.sunset[0].slice(-5)) {
+    $currentWeatherBackground.className = 'column-full popup day';
+  } else {
+    $currentWeatherBackground.className = 'column-full popup night';
   }
 }
 
@@ -521,6 +531,7 @@ $currentWeatherOverlay.addEventListener('click', function (event) {
     $currentWeatherTemp.textContent = '';
     $currentWeatherIcon.className = '';
     $currentWeatherWeathercode.textContent = '';
+    $currentWeatherBackground.className = 'column-full popup';
   }
 });
 
