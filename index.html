@@ -111,10 +111,26 @@
     </div>
     <div id="delete-overlay" class="row hidden">
       <div class="column-full popup">
-        <p id="delete-confirmation"></p>
+        <section>
+          <p>Are you sure you want to delete</p>
+          <p id="delete-confirmation"></p>
+        </section>
         <section class="space-evenly">
           <button id="no-button" type="button">NO</button>
           <button id="yes-button" type="button">YES</button>
+        </section>
+      </div>
+    </div>
+    <div id="current-weather-overlay" class="row hidden">
+      <div id="current-weather-background" class="column-full popup">
+        <p id="current-weather-place"></p>
+        <section id="current-weather-text" class="space-between">
+          <p id="current-weather-temperature"></p>
+          <i id="current-weather-icon" class=""></i>
+          <p id="current-weather-weathercode"></p>
+        </section>
+        <section class="space-evenly">
+          <button id="ok-button" type="button">OK</button>
         </section>
       </div>
     </div>

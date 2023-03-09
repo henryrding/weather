@@ -24,11 +24,16 @@ a {
 }
 
 li,
-#added,
+p,
 .settings > h4 {
   color: #1c0749;
   font-size: 1.8rem;
   font-weight: bold;
+}
+
+p {
+  margin: 0%;
+  white-space: pre;
 }
 
 li.location-entry,
@@ -69,7 +74,7 @@ img {
 }
 
 .padding {
-  padding: 0 1rem 0.5rem;
+  padding: 0 1rem;
 }
 
 .margin-right {
@@ -154,7 +159,8 @@ td {
 }
 
 #added-overlay,
-#delete-overlay {
+#delete-overlay,
+#current-weather-overlay {
   min-height: 100vh;
   background-color: rgba(0, 0, 0, 75%);
   position: fixed;
@@ -168,6 +174,15 @@ td {
   width: fit-content;
   border-radius: 0.25rem;
   padding: 1rem;
+  border: #1c0749 0.2rem solid;
+}
+
+.day {
+  background-color: #cdffff;
+}
+
+.night {
+  background-color: #2b2f77;
 }
 
 button {
@@ -189,8 +204,19 @@ button {
   background-color: red;
 }
 
-#button-row {
+#button-row,
+#delete-confirmation,
+#current-weather-place,
+#current-weather-text {
   justify-content: center;
+  text-align: center;
+}
+
+#current-weather-place,
+#current-weather-text,
+#added,
+#delete-confirmation {
+  margin-bottom: 1rem;
 }
 
 .gray {
@@ -198,7 +224,7 @@ button {
 }
 
 button:hover,
-i:hover,
+#settings-button:hover,
 input[type="radio"]:hover {
   cursor: pointer;
 }
@@ -209,8 +235,14 @@ input[type="radio"]:hover {
   border-radius: 50%;
 }
 
-.more-info-button {
+.more-info-button,
+.current-weather-button {
   margin: 0 1rem;
+}
+
+.more-info-button {
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
 @media screen and (max-width: 890px) {

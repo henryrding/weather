@@ -10,9 +10,9 @@ var data = {
 
 window.addEventListener('beforeunload', function (event) {
   var dataJSON = JSON.stringify(data);
-  this.localStorage.setItem('data-local-storage', dataJSON);
+  this.localStorage.setItem('weather-data-local-storage', dataJSON);
 });
 
-if (localStorage.getItem('data-local-storage') !== null) {
-  data = JSON.parse(localStorage.getItem('data-local-storage'));
+if (localStorage.getItem('weather-data-local-storage') !== null) {
+  data = JSON.parse(localStorage.getItem('weather-data-local-storage'));
 }
