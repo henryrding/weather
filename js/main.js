@@ -1,6 +1,8 @@
 var $searchForm = document.querySelector('#search-form');
 var $placeList = document.querySelector('#place-list');
 var $noResults = document.querySelector('.no-results');
+var $loadingMessage = document.querySelector('.loading-message');
+var $loadingMessageText = document.querySelector('#loading-message-text');
 var $addedOverlay = document.querySelector('#added-overlay');
 var $cancelButton = document.querySelector('#cancel-button');
 var $added = document.querySelector('#added');
@@ -356,21 +358,31 @@ document.addEventListener('DOMContentLoaded', function (event) {
 });
 
 function getResults(string) {
+  var $child = $placeList.lastElementChild;
+  while ($child) {
+    $placeList.removeChild($child);
+    $child = $placeList.lastElementChild;
+  }
+  $noResults.className = 'no-results hidden';
+  $loadingMessage.className = 'loading-message';
+  window.addEventListener('online', function () {
+    this.location.reload(true);
+  });
   var targetUrl = encodeURIComponent('http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://lfz-cors.herokuapp.com/?url=' + targetUrl);
   xhr.responseType = 'json';
+  xhr.addEventListener('error', function () {
+    $loadingMessageText.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
+  });
   xhr.addEventListener('load', function () {
-    var $child = $placeList.lastElementChild;
-    while ($child) {
-      $placeList.removeChild($child);
-      $child = $placeList.lastElementChild;
-    }
     if (xhr.response.data.length === 0) {
+      $loadingMessage.className = 'loading-message hidden';
       $noResults.className = 'no-results';
     } else {
       $noResults.className = 'no-results hidden';
+      $loadingMessage.className = 'loading-message hidden';
     }
     for (var i = 0; i < xhr.response.data.length; i++) {
       var $li = document.createElement('li');
@@ -487,7 +499,7 @@ $navbar.addEventListener('click', function (event) {
 $settingsForm.addEventListener('submit', function (event) {
   event.preventDefault();
   data.unit = $settingsForm.elements.unit.value;
-  location.reload();
+  location.reload(true);
 });
 
 window.onload = onPageLoad();
