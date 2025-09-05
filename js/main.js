@@ -378,6 +378,7 @@ function getResults(string) {
     $loadingMessageText.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
   });
   xhr.addEventListener('load', function () {
+    console.log(xhr.response);
     if (xhr.response.data.length === 0) {
       $loadingMessage.className = 'loading-message hidden';
       $noResults.className = 'no-results';
