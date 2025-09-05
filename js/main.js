@@ -371,8 +371,8 @@ function getResults(string) {
   var targetUrl = encodeURIComponent('http://api.positionstack.com/v1/forward?access_key=edf3a9421a5fdfce7b4bfc28f3718294&query=' + string);
 
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', targetUrl);
   // xhr.open('GET', 'https://lfz-cors.herokuapp.com/?url=' + targetUrl);
+  xhr.open('GET', 'https://api.allorigins.win/get?url=' + targetUrl);
   xhr.responseType = 'json';
   xhr.addEventListener('error', function () {
     $loadingMessageText.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
