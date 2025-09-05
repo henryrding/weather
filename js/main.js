@@ -378,24 +378,24 @@ function getResults(string) {
     $loadingMessageText.textContent = 'Sorry, there was an error connecting to the network! Please check your internet connection and try again.';
   });
   xhr.addEventListener('load', function () {
-    console.log(xhr.response);
-    if (xhr.response.data.length === 0) {
+    const data = JSON.parse(xhr.response.contents).data
+    if (data.length === 0) {
       $loadingMessage.className = 'loading-message hidden';
       $noResults.className = 'no-results';
     } else {
       $noResults.className = 'no-results hidden';
       $loadingMessage.className = 'loading-message hidden';
     }
-    for (var i = 0; i < xhr.response.data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
       var $li = document.createElement('li');
-      $li.textContent = xhr.response.data[i].label;
+      $li.textContent = data[i].label;
       $placeList.appendChild($li);
       var $button = document.createElement('button');
       $button.textContent = '+';
       $button.className = 'add-button';
-      $button.setAttribute('data-long', xhr.response.data[i].longitude);
-      $button.setAttribute('data-latt', xhr.response.data[i].latitude);
-      $button.setAttribute('data-name', xhr.response.data[i].label);
+      $button.setAttribute('data-long', data[i].longitude);
+      $button.setAttribute('data-latt', data[i].latitude);
+      $button.setAttribute('data-name', data[i].label);
       $placeList.appendChild($button);
     }
   });
